@@ -39,6 +39,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this.#resizeObs = new ResizeObserver(([root]) => {
       const element = root.target as HTMLElement;
       this._size = Math.min(element.offsetWidth, this.offsetHeight);
+      console.log("resize 了")
+      this._playing = false;
       this.relayout();
     });
     this.#resizeObs.observe(this);
