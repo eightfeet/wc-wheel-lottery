@@ -26,7 +26,6 @@
   "scripts": {
     "dev": "vite",
     "build:docs": "tsc && vite build --outDir docs --base ./",
-    "buildbak": "rollup -c",
     "build": "rimraf dist && rollup -c && rimraf dist/types",
     "preview": "vite preview"
   },
