@@ -89,13 +89,9 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   handleAttributes(attributeName: string) {
-    console.log("准备执行");
-    console.log("_playing", this._playing);
-    console.log("_playing", this._playing);
     if (this._playing === true) {
       return;
     }
-    
     if (attributeName === "prize") {
       this.lotter();
     }
@@ -104,7 +100,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   roundTimer: number = undefined;
 
   handleEnded(prize: string) {
-    this._playing = false;
     this.dispatchEvent(
       new CustomEvent("ended", {
         bubbles: true,
@@ -115,7 +110,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   handlePlay(prize: string) {
-    this._playing = true;
     this.dispatchEvent(
       new CustomEvent("play", {
         bubbles: true,
@@ -126,9 +120,10 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   lotter() {
-    console.log("执行")
     const prize = this.getAttribute("prize");
     if (prize) {
+      console.log("开始")
+      this._playing = true;
       this.handlePlay(prize);
       const elements = Array.from(this._prizes_dom.children);
       let position: number | undefined;
@@ -162,6 +157,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         setTimeout(() => {
           this.handleEnded(prize);
           this._prizes_dom.removeEventListener("transitionend", fn);
+          this._playing = false;
+          console.log("结束", this._playing)
         }, 200);
       };
 
