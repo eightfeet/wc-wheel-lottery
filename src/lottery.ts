@@ -90,6 +90,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
 
   handleAttributes(attributeName: string) {
     if (this._playing === true) {
+      console.log("正在抽奖")
       return;
     }
     if (attributeName === "prize") {
