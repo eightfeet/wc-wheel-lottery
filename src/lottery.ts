@@ -39,7 +39,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this.#resizeObs = new ResizeObserver(([root]) => {
       const element = root.target as HTMLElement;
       this._size = Math.min(element.offsetWidth, this.offsetHeight);
-      console.log("resize 了")
       this._playing = false;
       this.relayout();
     });
@@ -92,7 +91,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
 
   handleAttributes(attributeName: string) {
     if (this._playing === true) {
-      console.log("正在抽奖")
+      console.log("正在抽奖");
       return;
     }
     if (attributeName === "prize") {
@@ -125,7 +124,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   lotter() {
     const prize = this.getAttribute("prize");
     if (prize) {
-      console.log("开始")
+      console.log("开始");
       this._playing = true;
       this.handlePlay(prize);
       const elements = Array.from(this._prizes_dom.children);
@@ -157,12 +156,10 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       const fn = () => {
         this._prizes_dom.style.transitionDuration = "0s";
         this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
-        setTimeout(() => {
-          this.handleEnded(prize);
-          this._prizes_dom.removeEventListener("transitionend", fn);
-          this._playing = false;
-          console.log("结束", this._playing)
-        }, 200);
+        this.handleEnded(prize);
+        this._prizes_dom.removeEventListener("transitionend", fn);
+        this._playing = false;
+        console.log("结束", this._playing);
       };
 
       this._prizes_dom.addEventListener("transitionend", fn);
