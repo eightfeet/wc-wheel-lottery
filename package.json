@@ -1,5 +1,5 @@
 {
-  "name": "wc-wheel-lottery",
+  "name": "@eightfeet/wc-wheel-lottery",
   "private": false,
   "version": "0.0.1",
   "type": "module",
@@ -8,7 +8,9 @@
   "unpkg": "dist/index.iife.js",
   "jsdelivr": "dist/index.iife.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/eightfeet/wc-wheel-lottery.git"
@@ -19,12 +21,13 @@
   "scripts": {
     "dev": "vite",
     "build:docs": "tsc && vite build --outDir docs --base ./",
-    "build": "rollup -c",
-    "buildbak": "rimraf dist && rollup -c && rimraf dist/types",
+    "buildbak": "rollup -c",
+    "build": "rimraf dist && rollup -c && rimraf dist/types",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.1",
+    "rimraf": "^5.0.1",
     "rollup": "^3.23.0",
     "rollup-plugin-dts": "^6.0.0",
     "rollup-plugin-esbuild": "^5.0.0",
