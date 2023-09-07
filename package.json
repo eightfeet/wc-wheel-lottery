@@ -1,7 +1,7 @@
 {
   "name": "@eightfeet/wc-wheel-lottery",
-  "private": false,
   "version": "0.0.1",
+  "description": "wc-wheel-lottery is a lottery component written with web-component",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -11,20 +11,6 @@
   "files": [
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/eightfeet/wc-wheel-lottery.git"
-  },
-  "author": "eightfeet",
-  "license": "MIT",
-  "description": "wc-wheel-lottery is a lottery component written with web-component",
-  "scripts": {
-    "dev": "vite",
-    "build:docs": "tsc && vite build --outDir docs --base ./",
-    "buildbak": "rollup -c",
-    "build": "rimraf dist && rollup -c && rimraf dist/types",
-    "preview": "vite preview"
-  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.1",
     "rimraf": "^5.0.1",
@@ -36,8 +22,25 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
   },
+  "scripts": {
+    "dev": "vite",
+    "build:docs": "tsc && vite build --outDir docs --base ./",
+    "buildbak": "rollup -c",
+    "build": "rimraf dist && rollup -c && rimraf dist/types",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eightfeet/wc-wheel-lottery.git"
+  },
   "keywords": [
     "lottery",
     "wheel-lottery"
-  ]
+  ],
+  "author": "eightfeet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eightfeet/wc-wheel-lottery/issues"
+  },
+  "homepage": "https://github.com/eightfeet/wc-wheel-lottery#readme"
 }
