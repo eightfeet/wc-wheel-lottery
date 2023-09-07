@@ -89,7 +89,14 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   handleAttributes(attributeName: string) {
-    if (attributeName === "prize" && this._playing !== true) {
+    console.log("准备执行");
+    console.log("_playing", this._playing);
+    console.log("_playing", this._playing);
+    if (this._playing === true) {
+      return;
+    }
+    
+    if (attributeName === "prize") {
       this.lotter();
     }
   }
@@ -119,6 +126,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   lotter() {
+    console.log("执行")
     const prize = this.getAttribute("prize");
     if (prize) {
       this.handlePlay(prize);
