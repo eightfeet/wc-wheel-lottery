@@ -140,13 +140,22 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       this._old_dge = (newdeg - (newdeg % 360)) % 360;
       this._prizes_dom.style.transitionDuration = `${newtime}s`;
       this._prizes_dom.style.transform = `rotate(${newdeg}deg)`;
-      //
-      window.clearTimeout(this.roundTimer);
-      this.roundTimer = setTimeout(() => {
+
+      // window.clearTimeout(this.roundTimer);
+      // this.roundTimer = setTimeout(() => {
+      //   this._prizes_dom.style.transitionDuration = "0s";
+      //   this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
+      //   this.handleEnded(prize);
+      // }, newtime * 1000 + 100);
+
+      const fn = () => {
         this._prizes_dom.style.transitionDuration = "0s";
         this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
         this.handleEnded(prize);
-      }, newtime * 1000 + 100);
+        this._prizes_dom.removeEventListener("transitionend", fn)
+      }
+
+      this._prizes_dom.addEventListener("transitionend", fn)
     }
   }
 
