@@ -1,7 +1,7 @@
 {
   "name": "@eightfeet/wc-wheel-lottery",
   "version": "0.0.1",
-  "private":"false",
+  "private": false,
   "description": "wc-wheel-lottery is a lottery component written with web-component",
   "type": "module",
   "main": "dist/index.cjs",
