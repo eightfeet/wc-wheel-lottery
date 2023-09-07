@@ -39,9 +39,9 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this.#resizeObs = new ResizeObserver(([root]) => {
       const element = root.target as HTMLElement;
       this._size = Math.min(element.offsetWidth, this.offsetHeight);
-      this.relayout()
-    })
-    this.#resizeObs.observe(this)
+      this.relayout();
+    });
+    this.#resizeObs.observe(this);
 
     // 创建奖品监听
     this.#prizesObs = new MutationObserver((mutationsList) => {
@@ -99,29 +99,29 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   handleEnded(prize: string) {
     this._playing = false;
     this.dispatchEvent(
-      new CustomEvent('ended', {
+      new CustomEvent("ended", {
         bubbles: true,
         composed: true,
-        detail: prize
+        detail: prize,
       })
-    )
+    );
   }
 
   handlePlay(prize: string) {
     this._playing = true;
     this.dispatchEvent(
-      new CustomEvent('play', {
+      new CustomEvent("play", {
         bubbles: true,
         composed: true,
-        detail: prize
+        detail: prize,
       })
-    )
+    );
   }
 
   lotter() {
     const prize = this.getAttribute("prize");
     if (prize) {
-      this.handlePlay(prize)
+      this.handlePlay(prize);
       const elements = Array.from(this._prizes_dom.children);
       let position: number | undefined;
       elements.some((el, ind) => {
@@ -151,11 +151,13 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       const fn = () => {
         this._prizes_dom.style.transitionDuration = "0s";
         this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
-        this.handleEnded(prize);
-        this._prizes_dom.removeEventListener("transitionend", fn)
-      }
+        setTimeout(() => {
+          this.handleEnded(prize);
+          this._prizes_dom.removeEventListener("transitionend", fn);
+        }, 200);
+      };
 
-      this._prizes_dom.addEventListener("transitionend", fn)
+      this._prizes_dom.addEventListener("transitionend", fn);
     }
   }
 
