@@ -22,6 +22,7 @@
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
+      overflow: hidden;
     }
 
     ul {
@@ -72,8 +73,6 @@
       按钮
     </div>
   </wc-wheel-lottery>
-  <br />
-  <button id="test">测试</button>
 
   <script>
     document.querySelector(".button").onclick = () => {
@@ -90,11 +89,6 @@
     }
   </script>
 
-  <script>
-    document.querySelector("#test").onclick =() => {
-      window.mythrottle(() => console.log("222"), 1000)()
-    }
-  </script>
 </body>
 
 </html>

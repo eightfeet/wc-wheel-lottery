@@ -22,6 +22,7 @@
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
+      overflow: hidden;
     }
 
     ul {
@@ -50,7 +51,7 @@
   <script>
     window.eruda.init();
   </script>
-  <script type="module" crossorigin src="./assets/index-38a852ea.js"></script>
+  <script type="module" crossorigin src="./assets/index-b43ce145.js"></script>
 </head>
 
 <body>
@@ -73,8 +74,6 @@
       按钮
     </div>
   </wc-wheel-lottery>
-  <br />
-  <button id="test">测试</button>
 
   <script>
     document.querySelector(".button").onclick = () => {
@@ -91,11 +90,6 @@
     }
   </script>
 
-  <script>
-    document.querySelector("#test").onclick =() => {
-      window.mythrottle(() => console.log("222"), 1000)()
-    }
-  </script>
 </body>
 
 </html>

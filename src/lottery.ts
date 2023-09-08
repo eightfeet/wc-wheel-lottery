@@ -18,7 +18,7 @@ function throttle<T extends (...args: any[]) => any>(
   } as T;
 }
 
-(window as any).mythrottle = throttle;
+console.log("code", 1)
 
 export class Lottery extends HTMLElement implements LotteryOpt {
   _size: number;
@@ -169,6 +169,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
 
   // 重绘
   relayout() {
+    console.log("已触发重绘");
     this.relayoutPrizes();
     this.relayoutTrigger();
   }
