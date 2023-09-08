@@ -198,6 +198,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     rootStyle.borderRadius = `${this._size}px`;
     rootStyle.overflow = "hidden";
     const childrens = Array.from(this._prizes_dom.children);
+    const halfEachDeg = 360 / childrens.length / 2;
+    this._prizes_dom.style.transform = `rotate(${halfEachDeg % 360}deg)`;
     childrens.forEach((el, index) => {
       const element = el as HTMLElement;
       const elementStyle = element.style;
