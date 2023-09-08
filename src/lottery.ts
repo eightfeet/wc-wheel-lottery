@@ -90,6 +90,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       }, 200)
     );
     this.#attrsObs.observe(this, { childList: false, attributes: true });
+    this.handleLoad();
   }
 
   disconnectedCallback() {
@@ -126,6 +127,15 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     );
   }
 
+  handleLoad() {
+    this.dispatchEvent(
+      new CustomEvent("load", {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   lotter() {
     const prize = this.getAttribute("prize");
     if (prize) {
@@ -138,7 +148,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
           position = ind;
         }
       });
-      
+
       if (position === undefined) {
         this._playing = false;
         throw new Error("Unable to locate the prize element!");

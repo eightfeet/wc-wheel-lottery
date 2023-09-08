@@ -51,13 +51,13 @@
   <script>
     window.eruda.init();
   </script> -->
-  <script type="module" crossorigin src="./assets/index-de6674ea.js"></script>
+  <script type="module" crossorigin src="./assets/index-a7895674.js"></script>
 </head>
 
 <body>
   
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-wheel-lottery prize="1" class="lottery">
+  <wc-wheel-lottery prize="1" class="lottery" onload="" onerror=""  style="opacity: 0;">
     <ul title="prizes" style="background-color: #eee;">
       <li title="1">1</li>
       <li title="4">4</li>
@@ -76,6 +76,10 @@
   </wc-wheel-lottery>
 
   <script>
+    document.querySelector(".lottery").onload = () => {
+      document.querySelector(".lottery").style.opacity = 1
+    }
+
     document.querySelector(".button").onclick = () => {
       const prizeNum = Math.floor(Math.random() * 10);
       document.querySelector(".lottery").setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
@@ -89,6 +93,7 @@
       console.log("抽奖结束", `中奖${prize.detail}`);
       document.querySelector("#prizedisplay").innerHTML = `本次抽中奖品${prize.detail}`
     }
+    
   </script>
 
 </body>
