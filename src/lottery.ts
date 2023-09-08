@@ -136,6 +136,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       console.log("开始");
       this._playing = true;
       this.handlePlay(prize);
+      console.log("执行1");
       const elements = Array.from(this._prizes_dom.children);
       let position: number | undefined;
       elements.some((el, ind) => {
@@ -143,7 +144,11 @@ export class Lottery extends HTMLElement implements LotteryOpt {
           position = ind;
         }
       });
+      console.log("执行2");
+
       if (position === undefined) return;
+      console.log("执行3");
+
       const length = elements.length;
       const eachDeg = 360 / length;
       const newtime = `${this._transitionDuration}ms`;
@@ -160,10 +165,13 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
         this.handleEnded(prize);
         this._prizes_dom.removeEventListener("transitionend", fn);
+        console.log("执行5");
         this._playing = false;
       };
 
       this._prizes_dom.addEventListener("transitionend", fn);
+      console.log("执行4");
+
     }
   }
 
