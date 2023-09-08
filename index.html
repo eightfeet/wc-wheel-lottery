@@ -10,10 +10,12 @@
     body {
       text-align: center;
     }
+
     h3 {
       text-align: center;
       margin: 20px;
     }
+
     .lottery {
       width: 80vw;
       height: 80vw;
@@ -44,7 +46,7 @@
       user-select: none;
     }
   </style>
-  <script src="https://cdn.bootcss.com/eruda/1.2.6/eruda.min.js" ></script>
+  <script src="https://cdn.bootcss.com/eruda/1.2.6/eruda.min.js"></script>
   <script>
     window.eruda.init();
   </script>
@@ -70,6 +72,8 @@
       按钮
     </div>
   </wc-wheel-lottery>
+  <br />
+  <button id="test">测试</button>
 
   <script>
     document.querySelector(".button").onclick = () => {
@@ -83,6 +87,12 @@
     document.querySelector(".lottery").onended = (prize) => {
       console.log("抽奖结束", `中奖${prize.detail}`);
       document.querySelector("#prizedisplay").innerHTML = `本次抽中奖品${prize.detail}`
+    }
+  </script>
+
+  <script>
+    document.querySelector("#test").onclick =() => {
+      window.mythrottle(() => console.log("222"), 1000)()
     }
   </script>
 </body>

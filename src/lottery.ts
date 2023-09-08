@@ -3,12 +3,30 @@ export interface LotteryOpt extends HTMLElement {
   _playing: boolean;
 }
 
+function throttle<T extends (...args: any[]) => any>(
+  func: T,
+  delay: number
+): T {
+  let lastCall = 0;
+  return function (...args: Parameters<T>): ReturnType<T> {
+    const now = Date.now();
+    if (now - lastCall < delay) {
+      return;
+    }
+    lastCall = now;
+    return func(...args);
+  } as T;
+}
+
+(window as any).mythrottle = throttle;
+
 export class Lottery extends HTMLElement implements LotteryOpt {
   _size: number;
   _prizes_dom: HTMLElement;
   _trigger_dom: HTMLElement;
   _playing: boolean;
   _old_dge: number = 0;
+  _transitionDuration: number = 5000;
 
   constructor() {
     super();
@@ -21,7 +39,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   });
 
   #prizesObs: MutationObserver;
-  #triggerObs: MutationObserver;
   #attrsObs: MutationObserver;
   #resizeObs: ResizeObserver;
 
@@ -37,6 +54,9 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     // 监听lotter大小变化
     // @ts-ignore
     this.#resizeObs = new ResizeObserver(([root]) => {
+      if (this._playing === true) {
+        return;
+      }
       const element = root.target as HTMLElement;
       this._size = Math.min(element.offsetWidth, this.offsetHeight);
       this._playing = false;
@@ -46,9 +66,12 @@ export class Lottery extends HTMLElement implements LotteryOpt {
 
     // 创建奖品监听
     this.#prizesObs = new MutationObserver((mutationsList) => {
+      if (this._playing === true) {
+        return;
+      }
       mutationsList.forEach((m) => {
         if (m.type === "childList") {
-          console.log("子节点发生变更");
+          this.relayout();
         }
       });
     });
@@ -60,41 +83,27 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       subtree: true,
     });
 
-    // 创建触发监听
-    this.#triggerObs = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((m) => {
-        if (m.type === "childList") {
-          console.log("子节点发生变更");
-        }
-      });
-    });
-    // 触发监听
-    this.#triggerObs.observe(this._trigger_dom, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-
     // 监听属性变化
-    this.#attrsObs = new MutationObserver(([ms]) => {
-      if (ms.type === "attributes") {
-        this.handleAttributes(ms.attributeName);
-      }
-    });
+    this.#attrsObs = new MutationObserver(
+      throttle(([ms]) => {
+        if (ms.type === "attributes") {
+          this.handleAttributes(ms.attributeName);
+        }
+      }, this._transitionDuration)
+    );
     this.#attrsObs.observe(this, { childList: false, attributes: true });
   }
 
   disconnectedCallback() {
     this.#prizesObs.disconnect();
-    this.#triggerObs.disconnect();
   }
 
   handleAttributes(attributeName: string) {
     if (this._playing === true) {
       console.log("正在抽奖");
+      console.log("抽奖还未结束请勿开始");
       return;
-    }
-    if (attributeName === "prize") {
+    } else if (attributeName === "prize") {
       this.lotter();
     }
   }
@@ -137,21 +146,14 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       if (position === undefined) return;
       const length = elements.length;
       const eachDeg = 360 / length;
-      const newtime = 5;
+      const newtime = `${this._transitionDuration}ms`;
       const defaultRound = 6;
       let newdeg = eachDeg * position * -1;
       newdeg += 360 * defaultRound; // 默认旋转几周
       newdeg = newdeg + this._old_dge;
       this._old_dge = (newdeg - (newdeg % 360)) % 360;
-      this._prizes_dom.style.transitionDuration = `${newtime}s`;
+      this._prizes_dom.style.transitionDuration = newtime;
       this._prizes_dom.style.transform = `rotate(${newdeg}deg)`;
-
-      // window.clearTimeout(this.roundTimer);
-      // this.roundTimer = setTimeout(() => {
-      //   this._prizes_dom.style.transitionDuration = "0s";
-      //   this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
-      //   this.handleEnded(prize);
-      // }, newtime * 1000 + 100);
 
       const fn = () => {
         this._prizes_dom.style.transitionDuration = "0s";
@@ -159,7 +161,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         this.handleEnded(prize);
         this._prizes_dom.removeEventListener("transitionend", fn);
         this._playing = false;
-        console.log("结束", this._playing);
       };
 
       this._prizes_dom.addEventListener("transitionend", fn);
