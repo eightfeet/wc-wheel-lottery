@@ -144,7 +144,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
           position = ind;
         }
       });
-      console.log("执行2");
+      console.log("执行2; 奖品：", prize, "位置：", position);
 
       if (position === undefined) return;
       console.log("执行3");
