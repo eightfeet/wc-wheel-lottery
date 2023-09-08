@@ -76,7 +76,8 @@
 
   <script>
     document.querySelector(".button").onclick = () => {
-      document.querySelector(".lottery").setAttribute("prize", `${Math.floor(Math.random() * 10)}`);
+      const prizeNum = Math.floor(Math.random() * 10);
+      document.querySelector(".lottery").setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
     }
 
     document.querySelector(".lottery").onplay = (prize) => {

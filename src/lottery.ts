@@ -18,8 +18,6 @@ function throttle<T extends (...args: any[]) => any>(
   } as T;
 }
 
-console.log("code", 1)
-
 export class Lottery extends HTMLElement implements LotteryOpt {
   _size: number;
   _prizes_dom: HTMLElement;
@@ -89,26 +87,24 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         if (ms.type === "attributes") {
           this.handleAttributes(ms.attributeName);
         }
-      }, this._transitionDuration)
+      }, 200)
     );
     this.#attrsObs.observe(this, { childList: false, attributes: true });
   }
 
   disconnectedCallback() {
     this.#prizesObs.disconnect();
+    this.#attrsObs.disconnect();
+    this.#resizeObs.disconnect();
   }
 
   handleAttributes(attributeName: string) {
     if (this._playing === true) {
-      console.log("正在抽奖");
-      console.log("抽奖还未结束请勿开始");
       return;
     } else if (attributeName === "prize") {
       this.lotter();
     }
   }
-
-  roundTimer: number = undefined;
 
   handleEnded(prize: string) {
     this.dispatchEvent(
@@ -133,10 +129,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   lotter() {
     const prize = this.getAttribute("prize");
     if (prize) {
-      console.log("开始");
       this._playing = true;
       this.handlePlay(prize);
-      console.log("执行1");
       const elements = Array.from(this._prizes_dom.children);
       let position: number | undefined;
       elements.some((el, ind) => {
@@ -144,10 +138,11 @@ export class Lottery extends HTMLElement implements LotteryOpt {
           position = ind;
         }
       });
-      console.log("执行2; 奖品：", prize, "位置：", position);
-
-      if (position === undefined) return;
-      console.log("执行3");
+      
+      if (position === undefined) {
+        this._playing = false;
+        throw new Error("Unable to locate the prize element!");
+      };
 
       const length = elements.length;
       const eachDeg = 360 / length;
@@ -165,19 +160,15 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         this._prizes_dom.style.transform = `rotate(${newdeg % 360}deg)`;
         this.handleEnded(prize);
         this._prizes_dom.removeEventListener("transitionend", fn);
-        console.log("执行5");
         this._playing = false;
       };
 
       this._prizes_dom.addEventListener("transitionend", fn);
-      console.log("执行4");
-
     }
   }
 
   // 重绘
   relayout() {
-    console.log("已触发重绘");
     this.relayoutPrizes();
     this.relayoutTrigger();
   }

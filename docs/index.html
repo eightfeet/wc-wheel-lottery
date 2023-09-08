@@ -51,7 +51,7 @@
   <script>
     window.eruda.init();
   </script>
-  <script type="module" crossorigin src="./assets/index-5a2397a1.js"></script>
+  <script type="module" crossorigin src="./assets/index-de6674ea.js"></script>
 </head>
 
 <body>
@@ -77,7 +77,8 @@
 
   <script>
     document.querySelector(".button").onclick = () => {
-      document.querySelector(".lottery").setAttribute("prize", `${Math.floor(Math.random() * 10)}`);
+      const prizeNum = Math.floor(Math.random() * 10);
+      document.querySelector(".lottery").setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
     }
 
     document.querySelector(".lottery").onplay = (prize) => {
