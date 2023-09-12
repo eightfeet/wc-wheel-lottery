@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="./vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wc-wheel-lottery</title>
+  <title>wc-lottery</title>
   <style>
     body {
       text-align: center;
@@ -69,7 +69,7 @@
 <body>
   
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-wheel-lottery prize="1" class="lottery" onload="" onerror=""  style="opacity: 0;">
+  <wc-lottery prize="1" class="lottery" onload="" onerror=""  style="opacity: 0;">
     <ul title="prizes" style="background-color: #eee;">
       <li title="1">1</li>
       <li title="4">4</li>
@@ -85,7 +85,7 @@
     <div title="trigger" class="button">
       按钮
     </div>
-  </wc-wheel-lottery>
+  </wc-lottery>
 
   <script>
     document.querySelector(".lottery").onload = () => {

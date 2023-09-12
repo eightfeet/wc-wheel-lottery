@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wc-wheel-lottery</title>
+  <title>wc-lottery</title>
   <style>
     body {
       text-align: center;
@@ -25,38 +25,43 @@
       overflow: hidden;
     }
 
-    ul {
+
+    .lottery2 {
+      width: 80vw;
+      height: 80vw;
+      max-width: 500px;
+      max-height: 500px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .lottery ul {
       list-style: none;
     }
 
     li {
       background-color: #ccc;
-      padding-top: 5px;
       display: flex;
       justify-content: center;
-    }
-
-    /*可以写条分割线*/
-    li::after {
-      display: block;
-      width: 1px;
-      height: 150px;
-      transform: rotate(18deg);
-      transform-origin: 0 150px;
-      position: absolute;
-      background-color: #dadada;
-      content: " ";
+      align-items: center;
     }
 
     .button {
-      width: 50px;
-      height: 50px;
+      width: 80px;
+      height: 80px;
       background-color: #aaa;
       display: flex;
       justify-content: center;
       align-items: center;
       line-height: 1;
       user-select: none;
+    }
+
+    .activeclass {
+      background: #88f;
+    }
+
+    .select {
+      margin: 20px auto;
     }
   </style>
   <!-- <script src="https://cdn.bootcss.com/eruda/1.2.6/eruda.min.js"></script>
@@ -68,41 +73,77 @@
 <body>
   <script type="module" src="./example/index.ts"></script>
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-wheel-lottery prize="1" class="lottery" onload="" onerror=""  style="opacity: 0;">
-    <ul title="prizes" style="background-color: #eee;">
+  <wc-lottery prize="1" class="lottery" activeclass="activeclass" onload="" onerror=""  style="opacity: 0;" type="grid">
+    <ul title="prizes">
       <li title="1">1</li>
-      <li title="4">4</li>
-      <li title="3">3</li>
-      <li title="8">8</li>
-      <li title="6">6</li>
       <li title="2">2</li>
-      <li title="9">9</li>
-      <li title="10">10</li>
+      <li title="3">3</li>
+      <li title="4">4</li>
       <li title="5">5</li>
+      <li title="6">6</li>
       <li title="7">7</li>
+      <li title="8">8</li>
+      
     </ul>
     <div title="trigger" class="button">
-      按钮
+     抽奖
     </div>
-  </wc-wheel-lottery>
+  </wc-lottery>
 
+  <h3 id="prizedisplay">&nbsp;</h3>
+  <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror=""  style="opacity: 0;" type="wheel">
+    <ul title="prizes">
+      <li title="1">1</li>
+      <li title="2">2</li>
+      <li title="3">3</li>
+      <li title="4">4</li>
+      <li title="5">5</li>
+      <li title="6">6</li>
+      <li title="7">7</li>
+      <li title="8">8</li>
+      
+    </ul>
+    <div title="trigger" class="button">
+     抽奖
+    </div>
+  </wc-lottery>
   <script>
-    document.querySelector(".lottery").onload = () => {
-      document.querySelector(".lottery").style.opacity = 1
+    const lottery1 = document.querySelector(".lottery");
+    const lottery2 = document.querySelector(".lottery2");
+    lottery1.onload = () => {
+      lottery1.style.opacity = 1
     }
 
-    document.querySelector(".button").onclick = () => {
-      const prizeNum = Math.floor(Math.random() * 10);
-      document.querySelector(".lottery").setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
+    lottery1.querySelector(".button").onclick = () => {
+      const prizeNum = Math.floor(Math.random() * 8);
+      lottery1.setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
     }
 
-    document.querySelector(".lottery").onplay = (prize) => {
+    lottery1.onplay = (prize) => {
       console.log("开始动画", `中奖${prize.detail}`);
     }
 
-    document.querySelector(".lottery").onended = (prize) => {
+    lottery1.onended = (prize) => {
       console.log("抽奖结束", `中奖${prize.detail}`);
-      document.querySelector("#prizedisplay").innerHTML = `本次抽中奖品${prize.detail}`
+      document.querySelector("#prizedisplay").innerHTML = `抽奖1抽中奖品${prize.detail}`
+    }
+
+    lottery2.onload = () => {
+      lottery2.style.opacity = 1
+    }
+
+    lottery2.querySelector(".button").onclick = () => {
+      const prizeNum = Math.floor(Math.random() * 8);
+      lottery2.setAttribute("prize", `${prizeNum < 1 ? 1 : prizeNum}`);
+    }
+
+    lottery2.onplay = (prize) => {
+      console.log("开始动画", `中奖${prize.detail}`);
+    }
+
+    lottery2.onended = (prize) => {
+      console.log("抽奖结束", `中奖${prize.detail}`);
+      document.querySelector("#prizedisplay").innerHTML = `抽奖2抽中奖品${prize.detail}`
     }
     
   </script>

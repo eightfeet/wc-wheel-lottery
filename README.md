@@ -1,21 +1,21 @@
-# wc-wheel-lottery
+# wc-lottery
 
-The `wc-wheel-lottery` is a high-performance lottery webcomponent.
+The `wc-lottery` is a high-performance lottery webcomponent.
 
 ## 🎡 Demo
 
-- https://www.eightfeet.cn/wc-wheel-lottery/
+- https://www.eightfeet.cn/wc-lottery/
 
 ## 📦 Installation
 
 ```shell
-    npm i @eightfeet/wc-wheel-lottery
+    npm i @eightfeet/wc-lottery
 ```
 
 ## Usage
 
 ```js
-import "@eightfeet/wc-wheel-lottery";
+import "@eightfeet/wc-lottery";
 ```
 
 ```html
@@ -47,7 +47,7 @@ import "@eightfeet/wc-wheel-lottery";
     user-select: none;
   }
 </style>
-<wc-wheel-lottery prize="1" class="lottery">
+<wc-lottery prize="1" class="lottery">
   <ul title="prizes" style="background-color: #eee;">
     <li title="1">1</li>
     <li title="4">4</li>
@@ -61,7 +61,7 @@ import "@eightfeet/wc-wheel-lottery";
     <li title="7">7</li>
   </ul>
   <div title="trigger" class="button">按钮</div>
-</wc-wheel-lottery>
+</wc-lottery>
 
 <script>
   document.querySelector(".button").onclick = () => {
