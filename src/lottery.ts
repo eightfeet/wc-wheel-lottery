@@ -22,12 +22,16 @@ type LotteryType = "wheel" | "grid";
 export class Lottery extends HTMLElement implements LotteryOpt {
   _size: number;
   _prizes_dom: HTMLElement;
+  _prizes_dom_style: string;
+  _prizes_child_dom_style: string[];
+
   _trigger_dom: HTMLElement;
   _playing: boolean;
   _old_position: number = 0;
   _old_dge: number = 0;
   _transitionDuration: number = 5000;
   _type: LotteryType = "wheel";
+  _: string;
   _default_html: string;
 
   constructor() {
@@ -45,7 +49,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this._size = Math.min(this.offsetWidth, this.offsetHeight);
     this._prizes_dom = this.querySelector('[title*="prizes"]');
     this._trigger_dom = this.querySelector('[title*="trigger"]');
-    this._default_html = this.innerHTML;
+    this._prizes_dom_style = this._prizes_dom.getAttribute("style");
+    this._prizes_child_dom_style = Array.from(this._prizes_dom.children).map(el => el.getAttribute("style"));
 
     // 监听lotter大小变化
     // @ts-ignore
@@ -115,9 +120,14 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     }
 
     if (attributeName === "type") {
-      if (this._default_html) {
-        this.innerHTML = this._default_html;
+      if (this._prizes_dom_style) {
+        this._prizes_dom.setAttribute("style", this._prizes_dom_style)
       }
+
+      if (this._prizes_child_dom_style) {
+        Array.from(this._prizes_dom.children).map((el, index) => el.setAttribute("style", this._prizes_child_dom_style[index]));
+      }
+
       this.init();
       this.getType();
       this.relayout();
