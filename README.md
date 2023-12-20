@@ -4,7 +4,7 @@ The `wc-lottery` is a high-performance lottery webcomponent.
 
 ## 🎡 Demo
 
-- [https://www.eightfeet.cn/wc-lottery/](https://www.eightfeet.cn/wc-wheel-lottery/)
+- [https://www.eightfeet.cn/wc-wheel-lottery/](https://www.eightfeet.cn/wc-wheel-lottery/)
 
 ## 📦 Installation
 
