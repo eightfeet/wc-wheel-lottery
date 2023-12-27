@@ -68,7 +68,7 @@
   <script>
     window.eruda.init();
   </script> -->
-  <script type="module" crossorigin src="./assets/index-e1acaef4.js"></script>
+  <script type="module" crossorigin src="./assets/index-631343ce.js"></script>
 </head>
 
 <body>
@@ -90,7 +90,7 @@
      抽奖
     </div>
   </wc-lottery>
-
+<button>setting</button>
   <h3 id="prizedisplay">&nbsp;</h3>
   <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror=""  style="opacity: 0;" type="wheel">
     <ul title="prizes">
@@ -107,6 +107,7 @@
     <div title="trigger" class="button">
      抽奖
     </div>
+
   </wc-lottery>
   <script>
     const lottery1 = document.querySelector(".lottery");
@@ -145,6 +146,16 @@
     lottery2.onended = (prize) => {
       console.log("抽奖结束", `中奖${prize.detail}`);
       document.querySelector("#prizedisplay").innerHTML = `抽奖2抽中奖品${prize.detail}`
+    }
+
+    document.querySelector('button').onclick = () => {
+      const type = lottery1.getAttribute("type");
+      if (type === "wheel") {
+        lottery1.setAttribute("type", "grid")
+      }
+      if (type === "grid") {
+        lottery1.setAttribute("type", "wheel")
+      }
     }
     
   </script>

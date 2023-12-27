@@ -1,3 +1,10 @@
+export interface LotteryProps {
+  prize?: string | number;
+  activeclass?: string;
+  type?: "wheel" | "grid";
+  round?: number | string;
+}
+
 export interface LotteryOpt extends HTMLElement {
   _size: number;
   _playing: boolean;
@@ -33,6 +40,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   _type: LotteryType = "wheel";
   _: string;
   _default_html: string;
+  _prizes_grid_activeclass: string;
+  _round: number = 6;
 
   constructor() {
     super();
@@ -42,16 +51,34 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   #attrsObs: MutationObserver;
   #resizeObs: ResizeObserver;
 
+  getRound() {
+    this._round = Number(this.getAttribute("round")) || this._round;
+  }
+
+  getType() {
+    const attrType = this.getAttribute("type") as LotteryType;
+    this._type = ["wheel", "grid"].includes(attrType) ? attrType : "wheel";
+  }
+
+  getActiveclass() {
+    this._prizes_grid_activeclass = this.getAttribute("activeclass")
+  }
+
   init() {
     this.disconnect();
     this.style.display = "block";
     this.style.position = "relative";
     this._size = Math.min(this.offsetWidth, this.offsetHeight);
+    // 固定宽高
+    this.style.width = `${this._size}px`;
+    this.style.height = `${this._size}px`;
     this._prizes_dom = this.querySelector('[title*="prizes"]');
     this._trigger_dom = this.querySelector('[title*="trigger"]');
     this._prizes_dom_style = this._prizes_dom.getAttribute("style");
     this._prizes_child_dom_style = Array.from(this._prizes_dom.children).map(el => el.getAttribute("style"));
 
+    this.getActiveclass();
+    this.getRound();
     // 监听lotter大小变化
     // @ts-ignore
     this.#resizeObs = new ResizeObserver(([root]) => {
@@ -132,11 +159,15 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       this.getType();
       this.relayout();
     }
-  }
 
-  getType() {
-    const attrType = this.getAttribute("type") as LotteryType;
-    this._type = ["wheel", "grid"].includes(attrType) ? attrType : "wheel";
+    if (attributeName === "round") {
+      this.getRound();
+    }
+
+    if (attributeName === "activeclass") {
+      this.getActiveclass();
+    }
+
   }
 
   handleEnded(prize: string) {
@@ -180,7 +211,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     const length = elements.length;
     const eachDeg = 360 / length;
     const newtime = `${this._transitionDuration}ms`;
-    const defaultRound = 6;
+    
+    const defaultRound = this._round;
     let newdeg = eachDeg * position * -1;
     newdeg += 360 * defaultRound; // 默认旋转几周
     newdeg = newdeg + this._old_dge;
@@ -209,7 +241,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     position: number;
   }) {
     const prizeLength = elements.length;
-    const defaultRound = 5;
+    const defaultRound = this._round;
     let allLength = prizeLength * defaultRound + position; //可用次数
     let speed = 300; //转动速度
     let nowcount: number = this._old_position; //当前的变化位置
@@ -236,8 +268,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         }
 
         nowcount += 1;
-        elements.forEach((e) => e.classList.remove("activeclass"));
-        elements[nowcount % elements.length].classList.add("activeclass");
+        elements.forEach((e) => e.classList.remove(this._prizes_grid_activeclass));
+        elements[nowcount % elements.length].classList.add(this._prizes_grid_activeclass);
         setTimeout(dong, speed);
       }
     };
