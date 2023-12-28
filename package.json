@@ -1,6 +1,6 @@
 {
   "name": "@eightfeet/wc-lottery",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": false,
   "description": "wc-lottery is a lottery component written with web-component",
   "type": "module",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eightfeet/wc-lottery.git"
+    "url": "git+https://github.com/eightfeet/wc-wheel-lottery.git"
   },
   "keywords": [
     "lottery",
@@ -40,7 +40,7 @@
   "author": "eightfeet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eightfeet/wc-lottery/issues"
+    "url": "https://github.com/eightfeet/wc-wheel-lottery/issues"
   },
-  "homepage": "https://github.com/eightfeet/wc-lottery#readme"
+  "homepage": "https://github.com/eightfeet/wc-wheel-lottery#readme"
 }
