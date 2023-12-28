@@ -6,6 +6,28 @@ export interface LotteryProps {
   class?: string;
 }
 
+type LotteryEventCallBack = (e: {
+  /**奖品 */
+  detail: string;
+  [key: string]: any;
+}) => void;
+
+export interface LotteryEvents {
+  /**event事件 
+   * 抽奖动画结束时调用 
+   * LotteryElement.addEventListener('ended', [fn]) 或 LotteryElement.onended = [fn] 方式调用
+   */
+  onended?: LotteryEventCallBack;
+  /**event事件 
+   * 抽奖动画开始时调用 
+   * LotteryElement.addEventListener('play', [fn]) 或 LotteryElement.onplay = [fn] 方式调用
+   */
+  onplay?: LotteryEventCallBack;
+  [key: string]: any;
+}
+
+window.addEventListener
+
 export interface LotteryOpt extends HTMLElement {
   _size: number;
   _playing: boolean;
@@ -62,15 +84,13 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   getActiveclass() {
-    this._prizes_grid_activeclass = this.getAttribute("activeclass")
+    this._prizes_grid_activeclass = this.getAttribute("activeclass");
   }
 
   init() {
     this.disconnect();
     this.style.display = "block";
     this.style.position = "relative";
-    console.log(1111, this.style.display);
-    
     this._size = Math.min(this.offsetWidth, this.offsetHeight);
     // 固定宽高
     this.style.width = `${this._size}px`;
@@ -78,7 +98,9 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this._prizes_dom = this.querySelector('[title*="prizes"]');
     this._trigger_dom = this.querySelector('[title*="trigger"]');
     this._prizes_dom_style = this._prizes_dom.getAttribute("style");
-    this._prizes_child_dom_style = Array.from(this._prizes_dom.children).map(el => el.getAttribute("style"));
+    this._prizes_child_dom_style = Array.from(this._prizes_dom.children).map(
+      (el) => el.getAttribute("style")
+    );
 
     this.getActiveclass();
     this.getRound();
@@ -132,7 +154,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   connectedCallback() {
-    console.log(2222);
     this.init();
     this.getType();
     this.relayout();
@@ -152,11 +173,13 @@ export class Lottery extends HTMLElement implements LotteryOpt {
 
     if (attributeName === "type") {
       if (this._prizes_dom_style) {
-        this._prizes_dom.setAttribute("style", this._prizes_dom_style)
+        this._prizes_dom.setAttribute("style", this._prizes_dom_style);
       }
 
       if (this._prizes_child_dom_style) {
-        Array.from(this._prizes_dom.children).map((el, index) => el.setAttribute("style", this._prizes_child_dom_style[index]));
+        Array.from(this._prizes_dom.children).map((el, index) =>
+          el.setAttribute("style", this._prizes_child_dom_style[index])
+        );
       }
 
       this.init();
@@ -171,7 +194,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     if (attributeName === "activeclass") {
       this.getActiveclass();
     }
-
   }
 
   handleEnded(prize: string) {
@@ -215,7 +237,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     const length = elements.length;
     const eachDeg = 360 / length;
     const newtime = `${this._transitionDuration}ms`;
-    
+
     const defaultRound = this._round;
     let newdeg = eachDeg * position * -1;
     newdeg += 360 * defaultRound; // 默认旋转几周
@@ -272,8 +294,12 @@ export class Lottery extends HTMLElement implements LotteryOpt {
         }
 
         nowcount += 1;
-        elements.forEach((e) => e.classList.remove(this._prizes_grid_activeclass));
-        elements[nowcount % elements.length].classList.add(this._prizes_grid_activeclass);
+        elements.forEach((e) =>
+          e.classList.remove(this._prizes_grid_activeclass)
+        );
+        elements[nowcount % elements.length].classList.add(
+          this._prizes_grid_activeclass
+        );
         setTimeout(dong, speed);
       }
     };
