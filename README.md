@@ -12,6 +12,74 @@ The `wc-lottery` is a high-performance lottery webcomponent.
     npm i @eightfeet/wc-lottery
 ```
 
+## Attribute
+
+- **class** string
+
+  > wc-lottery 的样式名
+
+  > 请确保 wc-lottery 的样式属性 display 为 block, 组件以此来计算内部宽高，此属性默认为 block，但不排除被父级影响或覆盖；
+
+  ```html
+  <style>
+    .yourclass {
+      display: block;
+    }
+  </style>
+  <wc-lottery class="your class"> ... </wc-lottery>
+  ```
+
+- **prize** string | number;
+  > wc-lottery 的奖品 id，当外部修改此属性时，组件内部开始启用抽奖动画，值为 undefined 时不开启抽奖动画
+  ```html
+  <wc-lottery prize="your prize"> ... </wc-lottery>
+  ```
+- **activeclass** string;
+  > wc-lottery 的奖品项目被激活的样式；此属性仅在 type="grid"九宫格抽奖时才起作用，最终奖品将以此样式高亮显示;
+  ```html
+  <style>
+    .youractiveclass {
+      display: block;
+    }
+  </style>
+  <wc-lottery activeclass="youractiveclass"> ... </wc-lottery>
+  ```
+- **type** "wheel" | "grid";
+
+  > 类型：wheel 转盘抽奖，grid 九宫格抽奖 默认为 wheel
+
+  ```html
+  <wc-lottery type="grid"> ... </wc-lottery>
+  ```
+
+- **round** number | string;
+  > 旋转圈数, 默认 6 圈
+  ```html
+  <wc-lottery round="6"> ... </wc-lottery>
+  ```
+
+## Event
+
+- **onplay**
+
+  > 抽奖动画开始时调用
+
+  ```javascript
+  // 方法1
+  LotteryElement.addEventListener("play", ({detail}) => {console.log('奖品': detail)});
+  // 方法2
+  LotteryElement.onplay = ({detail}) => {console.log('奖品': detail)};
+  ```
+
+- **onended**
+  > 抽奖动画结束时调用
+  ```javascript
+  // 方法1
+  LotteryElement.addEventListener("ended", ({detail}) => {console.log('奖品': detail)});
+  // 方法2
+  LotteryElement.onended = ({detail}) => {console.log('奖品': detail)};
+  ```
+
 ## Usage
 
 ```js
@@ -86,14 +154,18 @@ import "@eightfeet/wc-lottery";
 import { LotteryProps } from "@eightfeet/wc-lottery";
 import { useState, DOMAttributes } from "react";
 
-type CustomElement<T> = Partial<
-  T & DOMAttributes<T> & { children: any; ref: any }
+type LotteryElement<T> = Partial<
+  T &
+    DOMAttributes<T> & {
+      children: any;
+      ref: React.MutableRefObject<LotteryEvents | undefined>;
+    }
 >;
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      ["wc-lottery"]: CustomElement<LotteryProps>;
+      ["wc-lottery"]: LotteryElement<LotteryProps>;
     }
   }
 }
