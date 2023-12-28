@@ -79,3 +79,73 @@ import "@eightfeet/wc-lottery";
   };
 </script>
 ```
+
+### 在 React + Typescript 中使用
+
+```typescript
+import { LotteryProps } from "@eightfeet/wc-lottery";
+import { useState, DOMAttributes } from "react";
+
+type CustomElement<T> = Partial<
+  T & DOMAttributes<T> & { children: any; ref: any }
+>;
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ["wc-lottery"]: CustomElement<LotteryProps>;
+    }
+  }
+}
+```
+
+```javascript
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import '@eightfeet/wc-lottery';
+import { LotteryEvents } from "@eightfeet/wc-lottery";
+
+
+const Lottery: React.FC<Props> = () => {
+  const data = useMemo(() => ['1', '2', '3', '4'], [])
+  const [prize, setPrize] = useState<string>();
+  const lotteryRef = useRef<LotteryEvents>();
+
+  // 抽奖
+  const handleLottery = useCallback(
+    async () => {
+      const prize = await Promise.resolve('1');
+      setPrize(prize);
+    },
+    [],
+  );
+
+  // 抽奖结束
+  const handleLotteryEnded = useCallback(
+    ({ detail }: { detail: string }) => {
+      console.log('抽中', detail);
+      setPrize(undefined)
+    },
+    [],
+  );
+
+  // 事件挂载
+  useEffect(() => {
+    if (lotteryRef.current) {
+      lotteryRef.current.onended = handleLotteryEnded
+    }
+  }, [handleLotteryEnded])
+
+
+  return <wc-lottery prize={prize} class={s.lt} ref={lotteryRef} activeclass={s.act} type="wheel" round={5}>
+    <div title="prizes">
+      {
+        data.map(item => <div style={{ background: "red", borderRadius: 100 }} key={item} title={item}>{item}</div>)
+      }
+    </div>
+    <button title="trigger" onClick={handleLottery}>
+      抽奖
+    </button>
+  </wc-lottery>
+};
+
+```

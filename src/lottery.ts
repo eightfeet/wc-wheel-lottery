@@ -95,6 +95,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     // 固定宽高
     this.style.width = `${this._size}px`;
     this.style.height = `${this._size}px`;
+    this.style.color = `red`;
     this._prizes_dom = this.querySelector('[title*="prizes"]');
     this._trigger_dom = this.querySelector('[title*="trigger"]');
     this._prizes_dom_style = this._prizes_dom.getAttribute("style");
