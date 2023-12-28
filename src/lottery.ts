@@ -3,6 +3,7 @@ export interface LotteryProps {
   activeclass?: string;
   type?: "wheel" | "grid";
   round?: number | string;
+  class?: string;
 }
 
 export interface LotteryOpt extends HTMLElement {
@@ -24,7 +25,7 @@ function throttle<T extends (...args: any[]) => any>(
     return func(...args);
   } as T;
 }
-type LotteryType = "wheel" | "grid";
+export type LotteryType = "wheel" | "grid";
 
 export class Lottery extends HTMLElement implements LotteryOpt {
   _size: number;
@@ -68,6 +69,8 @@ export class Lottery extends HTMLElement implements LotteryOpt {
     this.disconnect();
     this.style.display = "block";
     this.style.position = "relative";
+    console.log(1111, this.style.display);
+    
     this._size = Math.min(this.offsetWidth, this.offsetHeight);
     // 固定宽高
     this.style.width = `${this._size}px`;
@@ -129,6 +132,7 @@ export class Lottery extends HTMLElement implements LotteryOpt {
   }
 
   connectedCallback() {
+    console.log(2222);
     this.init();
     this.getType();
     this.relayout();
