@@ -17,22 +17,22 @@
     }
 
     .lottery {
-      width: 80vw;
+      /* width: 80vw;
       height: 80vw;
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
-      overflow: hidden;
+      overflow: hidden; */
     }
 
 
     .lottery2 {
-      width: 80vw;
+      /* width: 80vw;
       height: 80vw;
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
-      overflow: hidden;
+      overflow: hidden; */
     }
     .lottery ul {
       list-style: none;
@@ -68,13 +68,13 @@
   <script>
     window.eruda.init();
   </script> -->
-  <script type="module" crossorigin src="./assets/index-631343ce.js"></script>
+  <script type="module" crossorigin src="./assets/index-7faa3e6f.js"></script>
 </head>
 
 <body>
   
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-lottery prize="1" class="lottery" activeclass="activeclass" onload="" onerror=""  style="opacity: 0;" type="grid">
+  <wc-lottery prize="1" class="lottery" activeclass="activeclass" onended="alert(111)" onload="" onerror=""  type="grid">
     <ul title="prizes">
       <li title="1">1</li>
       <li title="2">2</li>
@@ -84,7 +84,6 @@
       <li title="6">6</li>
       <li title="7">7</li>
       <li title="8">8</li>
-      
     </ul>
     <div title="trigger" class="button">
      抽奖
@@ -92,7 +91,7 @@
   </wc-lottery>
 <button>setting</button>
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror=""  style="opacity: 0;" type="wheel">
+  <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror=""  type="wheel">
     <ul title="prizes">
       <li title="1">1</li>
       <li title="2">2</li>
@@ -113,7 +112,7 @@
     const lottery1 = document.querySelector(".lottery");
     const lottery2 = document.querySelector(".lottery2");
     lottery1.onload = () => {
-      lottery1.style.opacity = 1
+      // lottery1.style.opacity = 1
     }
 
     lottery1.querySelector(".button").onclick = () => {
@@ -131,7 +130,7 @@
     }
 
     lottery2.onload = () => {
-      lottery2.style.opacity = 1
+      // lottery2.style.opacity = 1
     }
 
     lottery2.querySelector(".button").onclick = () => {

@@ -282,7 +282,6 @@ export class Lottery extends HTMLElement implements LotteryOpt {
       } else {
         if (nowcount < prizeLength * 2 + this._old_position) {
           if (speed > 30) {
-            console.log(speed);
             speed -= 30;
           } else {
             speed = 30;

@@ -1,6 +1,6 @@
 {
   "name": "@eightfeet/wc-lottery",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "description": "wc-lottery is a lottery component written with web-component",
   "type": "module",
