@@ -17,23 +17,24 @@
     }
 
     .lottery {
-      /* width: 80vw;
+      width: 80vw;
       height: 80vw;
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
-      overflow: hidden; */
+      overflow: hidden;
     }
 
 
     .lottery2 {
-      /* width: 80vw;
+      width: 80vw;
       height: 80vw;
       max-width: 500px;
       max-height: 500px;
       margin: 0 auto;
-      overflow: hidden; */
+      overflow: hidden;
     }
+
     .lottery ul {
       list-style: none;
     }
@@ -74,7 +75,7 @@
 <body>
   
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-lottery prize="1" class="lottery" activeclass="activeclass" onended="alert(111)" onload="" onerror=""  type="grid">
+  <wc-lottery prize="1" class="lottery" activeclass="activeclass" onended="alert(111)" onload="" onerror="" type="grid">
     <ul title="prizes">
       <li title="1">1</li>
       <li title="2">2</li>
@@ -86,12 +87,15 @@
       <li title="8">8</li>
     </ul>
     <div title="trigger" class="button">
-     抽奖
+      抽奖
     </div>
   </wc-lottery>
-<button>setting</button>
+  <br />
+  <button>更换抽奖类型</button>
+  <br />
+
   <h3 id="prizedisplay">&nbsp;</h3>
-  <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror=""  type="wheel">
+  <wc-lottery prize="1" class="lottery2" activeclass="activeclass" onload="" onerror="" type="wheel">
     <ul title="prizes">
       <li title="1">1</li>
       <li title="2">2</li>
@@ -101,10 +105,10 @@
       <li title="6">6</li>
       <li title="7">7</li>
       <li title="8">8</li>
-      
+
     </ul>
     <div title="trigger" class="button">
-     抽奖
+      抽奖
     </div>
 
   </wc-lottery>
@@ -156,7 +160,7 @@
         lottery1.setAttribute("type", "wheel")
       }
     }
-    
+
   </script>
 
 </body>

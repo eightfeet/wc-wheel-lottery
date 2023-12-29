@@ -178,7 +178,7 @@ import { LotteryEvents } from "@eightfeet/wc-lottery";
 
 
 const Lottery: React.FC<Props> = () => {
-  const data = useMemo(() => ['1', '2', '3', '4'], [])
+  const data = useMemo(() => ["1", "2", "3", "4", "5", "6", "7", "8"], [])
   const [prize, setPrize] = useState<string>();
   const lotteryRef = useRef<LotteryEvents>();
 
@@ -220,4 +220,61 @@ const Lottery: React.FC<Props> = () => {
   </wc-lottery>
 };
 
+```
+
+### 在 Vue + Typescript 中使用
+
+脚手架配置请参考 [Vue 与 Web Components](https://cn.vuejs.org/guide/extras/web-components.html#vue-and-web-components)
+
+**使用方式**
+
+```html
+<script setup lang="ts">
+  import { ref } from "vue";
+  import "@eightfeet/wc-lottery";
+  const prizes = ref<string[]>(["1", "2", "3", "4", "5", "6", "7", "8"]);
+  const prize = ref<string>();
+</script>
+
+<template>
+  <wc-lottery
+    class="lottery"
+    :prize="prize"
+    @ended="prize = undefined"
+    type="grid"
+    activeclass="activate"
+  >
+    <div title="prizes" style="background-color: #eee;">
+      <div class="prizebox" v-for="item in prizes" :title="item">{{item}}</div>
+    </div>
+    <div
+      title="trigger"
+      class="button"
+      @click="prize = `${Math.floor(Math.random() * 7) + 1}`"
+    >
+      抽奖
+    </div>
+  </wc-lottery>
+</template>
+
+<style scoped>
+  .lottery {
+    width: 200px;
+    width: 200px;
+  }
+  .activate {
+    background-color: rgb(108, 143, 255);
+  }
+  .prizebox,
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button {
+    background-color: orange;
+    width: 67px;
+    height: 67px;
+  }
+</style>
 ```
